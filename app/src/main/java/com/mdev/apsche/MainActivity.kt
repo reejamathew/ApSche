@@ -3,8 +3,7 @@ package com.mdev.apsche
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-<<<<<<< Updated upstream
-=======
+
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -12,15 +11,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.onNavDestinationSelected
 import com.google.android.material.appbar.MaterialToolbar
->>>>>>> Stashed changes
+
 
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-<<<<<<< Updated upstream
-=======
+
         var toolbar =  findViewById<MaterialToolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -45,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         showPopup()
       //  navController.navigate(R.id.action_signInFragment_to_homeFragment)
         return  item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
->>>>>>> Stashed changes
+
     }
 
     private fun showPopup() {
