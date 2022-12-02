@@ -10,10 +10,17 @@
     <string name="noAccountExists">Don\'t have an Account?</string>
     <string name="enterEmail">Enter email</string>
     <string name="enterPassword">Enter password</string>
-    <string name="enterName">Enter name</string>
     <string name="confirmPassword">Confirm Password</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
-
+    <string name="aptno">Enter Appartment Number</string>
+    <string name="tenant_name">Enter Tenant Name</string>
+    <string name="phone_no">Enter Phone Number</string>
+    <string name="lease_amount">Enter Lease Amount</string>
+    <string name="lease_period">Enter Lease Period</string>
+    <string name="beds">Enter Beds Count</string>
+    <string name="add_details">Add Details</string>
+    <string name="submit">Submit</string>
+    <string name="hello_blank_fragment">hello_blank_fragment</string>
 
 </resources>

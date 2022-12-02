@@ -1,6 +1,5 @@
 package com.mdev.apsche
 
-import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -11,16 +10,16 @@ import android.view.ViewGroup
 import android.webkit.ValueCallback
 import android.widget.Button
 import android.widget.TextView
-import com.mdev.apsche.database.UserDetailsDatabase
+import com.mdev.apsche.database.ApartmentDatabase
 
 class AddDetailsFragment : Fragment() {
     private val sharedPrefFile = "kotlinsharedpreference"
-    private lateinit var recipeName: TextView
-    private lateinit var ingredients: TextView
-    private lateinit var description: TextView
-
-
-    var part_image: String? = null
+    private lateinit var tenantName: TextView
+    private lateinit var aptNo: TextView
+    private lateinit var phoneNo: TextView
+    private lateinit var leaseAmount: TextView
+    private lateinit var leasePeriod: TextView
+    private lateinit var beds: TextView
 
 
     var filePath: ValueCallback<Array<Uri>>? = null
@@ -36,16 +35,14 @@ class AddDetailsFragment : Fragment() {
 
         val submitButton = view.findViewById<Button>(R.id.submitButton);
 
-        recipeName = view.findViewById<TextView>(R.id.recipeNameEditText);
-        ingredients = view.findViewById<TextView>(R.id.ingredientsEditText)
-        description = view.findViewById<TextView>(R.id.descriptionEditText)
-        //video = view.findViewById<Button>(R.id.videoInputButton);
-
+        tenantName = view.findViewById<TextView>(R.id.tenantNameEditText);
+        aptNo = view.findViewById<TextView>(R.id.aptNoEditText);
+        phoneNo = view.findViewById<TextView>(R.id.phoneNoEditText);
+        leaseAmount = view.findViewById<TextView>(R.id.leaseAmountEditText);
+        leasePeriod = view.findViewById<TextView>(R.id.leasePeriodEditText);
+        beds = view.findViewById<TextView>(R.id.bedsEditText);
         var isAllFieldsChecked = false
 
-//        video.setOnClickListener {
-//            println("clicked on video upload!");
-//        }
 
 
         submitButton.setOnClickListener(View.OnClickListener { // store the returned value of the dedicated function which checks
@@ -57,16 +54,20 @@ class AddDetailsFragment : Fragment() {
             if (isAllFieldsChecked) {
 
                 // initialise db
-                val databaseClass = UserDetailsDatabase(requireActivity())
+                val databaseClass = ApartmentDatabase(requireActivity())
 //                val sharedPreferences =  activity?.getSharedPreferences("userDetails", Context.MODE_PRIVATE)
-//                val emailId = sharedPreferences?.getString("emailId","")
+                val emailId = "test@gmail.com"
                 //insertion
-                val insertRecipe = databaseClass.insertRecipe(
-                    recipeName.text.toString(),
-                    ingredients.text.toString(),
-                    description.text.toString()
+                databaseClass.insertRecipe(
+                    tenantName.text.toString(),
+                    aptNo.text.toString(),
+                    phoneNo.text.toString(),
+                    leaseAmount.text.toString(),
+                    leasePeriod.text.toString(),
+                    beds.text.toString(),
+                    emailId
                 )
-                Log.d("insert123", insertRecipe.toString())
+                Log.d("insert123", aptNo.text.toString(),)
             }
         })
 
@@ -75,16 +76,8 @@ class AddDetailsFragment : Fragment() {
 
 
     private fun checkAllFields(): Boolean {
-        if (recipeName.length() === 0) {
-            recipeName.error = "Recipe Name is required"
-            return false
-        }
-        if (ingredients.length() === 0) {
-            ingredients.error = "Ingredients is required"
-            return false
-        }
-        if (description.length() === 0) {
-            description.error = "Description is required"
+        if (tenantName.length() === 0) {
+            tenantName.error = "Tenant Name is required"
             return false
         }
         // after all validation return true.

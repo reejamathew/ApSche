@@ -18,11 +18,11 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/addRecipeTitle"
+                android:id="@+id/addDetailsTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/AddRecipesText"
+                android:text="@string/add_details"
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -31,81 +31,142 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/recipeNameContainer"
+                android:id="@+id/aptNoContainer"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="24dp"
-                android:hint="@string/recipe_name_hint"
+                android:hint="@string/aptno"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addRecipeTitle">
+                app:layout_constraintTop_toBottomOf="@+id/addDetailsTitle">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/recipeNameEditText"
+                    android:id="@+id/aptNoEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/recipe_name_hint"
+                    android:hint="@string/aptno"
                     android:inputType="textPersonName"
                     android:lines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ingredientsContainer"
+                android:id="@+id/tenantNameContainer"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="24dp"
-                android:hint="@string/recipe_ingredients_hint"
+                android:hint="@string/tenant_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recipeNameContainer">
+                app:layout_constraintTop_toBottomOf="@+id/aptNoContainer">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ingredientsEditText"
+                    android:id="@+id/tenantNameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
+                    android:hint="@string/tenant_name"
+                    android:inputType="textPersonName"
                     android:lines="1" />
-
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/descriptionContainer"
+                android:id="@+id/phoneNumberContainer"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="24dp"
-                android:hint="@string/recipe_description_hint"
+                android:hint="@string/phone_no"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredientsContainer">
+                app:layout_constraintTop_toBottomOf="@+id/tenantNameContainer">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/descriptionEditText"
+                    android:id="@+id/phoneNoEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center|left"
-                    android:inputType="textMultiLine"
-                    android:minLines="10" />
+                    android:hint="@string/phone_no"
+                    android:inputType="phone"
+                    android:lines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/leaseAmountContainer"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="24dp"
+                android:hint="@string/lease_amount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phoneNumberContainer">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/leaseAmountEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/lease_amount"
+                    android:inputType="numberDecimal"
+                    android:lines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/leasePeriodContainer"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="24dp"
+                android:hint="@string/lease_period"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/leaseAmountContainer">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/leasePeriodEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/lease_period"
+                    android:inputType="textPersonName"
+                    android:lines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/bedsContainer"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="24dp"
+                android:hint="@string/beds"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/leasePeriodContainer">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/bedsEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/beds"
+                    android:inputType="textPersonName"
+                    android:lines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/submitButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:layout_marginEnd="20dp"
                 android:backgroundTint="@color/theme_color"
-                android:text="@string/submit_button_text"
+                android:text="@string/submit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/descriptionContainer" />
+                app:layout_constraintTop_toBottomOf="@+id/bedsContainer" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
