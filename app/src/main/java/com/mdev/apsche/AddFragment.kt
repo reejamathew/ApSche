@@ -1,59 +1,99 @@
 package com.mdev.apsche
 
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.ValueCallback
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
+import androidx.navigation.findNavController
+import com.mdev.apsche.database.ApartmentDatabase
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [AddDetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AddDetailsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private val sharedPrefFile = "kotlinsharedpreference"
+    private lateinit var tenantName: TextView
+    private lateinit var aptNo: TextView
+    private lateinit var phoneNo: TextView
+    private lateinit var leaseAmount: TextView
+    private lateinit var leasePeriod: TextView
+    private lateinit var beds: TextView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+
+    var filePath: ValueCallback<Array<Uri>>? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_details, container, false)
-    }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AddDetailsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AddDetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        val view = inflater.inflate(R.layout.fragment_add_details, container, false)
+
+        val submitButton = view.findViewById<Button>(R.id.submitButton);
+
+        tenantName = view.findViewById<TextView>(R.id.tenantNameEditText);
+        aptNo = view.findViewById<TextView>(R.id.aptNoEditText);
+        phoneNo = view.findViewById<TextView>(R.id.phoneNoEditText);
+        leaseAmount = view.findViewById<TextView>(R.id.leaseAmountEditText);
+        leasePeriod = view.findViewById<TextView>(R.id.leasePeriodEditText);
+        beds = view.findViewById<TextView>(R.id.bedsEditText);
+        var isAllFieldsChecked = false
+
+
+
+        submitButton.setOnClickListener(View.OnClickListener { // store the returned value of the dedicated function which checks
+            // whether the entered data is valid or if any fields are left blank.
+            isAllFieldsChecked = checkAllFields()
+
+            // the boolean variable turns to be true then
+            // only the user must be proceed to the activity2
+            if (isAllFieldsChecked) {
+
+                // initialise db
+                val databaseClass = ApartmentDatabase(requireActivity())
+//                val sharedPreferences =  activity?.getSharedPreferences("userDetails", Context.MODE_PRIVATE)
+                val emailId = "test@gmail.com"
+                //insertion
+                val insertAppartment = databaseClass.insertAppartment(
+                    tenantName.text.toString(),
+                    aptNo.text.toString(),
+                    phoneNo.text.toString(),
+                    leaseAmount.text.toString(),
+                    leasePeriod.text.toString(),
+                    beds.text.toString(),
+                    emailId
+                )
+                if(insertAppartment){
+                    view.findNavController().navigate(R.id.action_addDetailsFragment_to_detailsFragment, Bundle().apply {
+                        putString("aptId", "1")
+                        putString("aptNo", aptNo.text.toString())
+                        putString("tenant_name", tenantName.text.toString())
+                        putString("phone_no", phoneNo.text.toString())
+                        putString("lease_period", leasePeriod.text.toString())
+                        putString("lease_amount", leaseAmount.text.toString())
+                        putString("beds", beds.text.toString())
+                    })
                 }
             }
+        })
+
+        return view
     }
+
+
+    private fun checkAllFields(): Boolean {
+        if (tenantName.length() === 0) {
+            tenantName.error = "Tenant Name is required"
+            return false
+        }
+        // after all validation return true.
+        return true
+    }
+
 }

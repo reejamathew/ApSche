@@ -1,32 +1,21 @@
 package com.mdev.apsche
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import androidx.navigation.findNavController
+import com.mdev.apsche.database.ApartmentDatabase
+import com.mdev.apsche.model.Apartment
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [EditFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class EditFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -34,26 +23,36 @@ class EditFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_edit, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment EditFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            EditFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val aptId = requireArguments().getString("aptId")
+        val databaseClass = ApartmentDatabase(requireActivity())
+        val apartment: Apartment = databaseClass.getApartmentDetailsById(aptId)[0]
+        view.findViewById<TextView>(R.id.Aptno).text = apartment.aptNo.toString()
+        view.findViewById<TextView>(R.id.tenant_name).text = apartment.tenant_name.toString()
+        view.findViewById<TextView>(R.id.phone_no).text = apartment.phone_no.toString()
+        view.findViewById<TextView>(R.id.lease_period).text = apartment.lease_period.toString()
+        view.findViewById<TextView>(R.id.lease_amount).text = apartment.lease_amount.toString()
+        view.findViewById<TextView>(R.id.beds).text = apartment.beds.toString()
+        val editButton = view.findViewById<Button>(R.id.editButton);
+
+        editButton.setOnClickListener(View.OnClickListener {
+            //insertion
+            val updateAppartment = databaseClass.updateAppartment(
+                aptId,
+                view.findViewById<TextView>(R.id.Aptno).text.toString(),
+                view.findViewById<TextView>(R.id.tenant_name).text.toString(),
+                view.findViewById<TextView>(R.id.phone_no).text.toString(),
+                view.findViewById<TextView>(R.id.lease_period).text.toString(),
+                view.findViewById<TextView>(R.id.lease_amount).text.toString(),
+                view.findViewById<TextView>(R.id.beds).text.toString()
+            )
+
+//            view.findNavController().navigate(R.id.action_detailsFragment_to_editFragment)
+        })
     }
 }
