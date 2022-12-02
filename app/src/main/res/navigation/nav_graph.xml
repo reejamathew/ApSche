@@ -3,11 +3,74 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/intialFragment">
+    app:startDestination="@id/initialFragment">
 
     <fragment
-        android:id="@+id/intialFragment"
-        android:name="com.mdev.apsche.IntialFragment"
-        android:label="fragment_intial"
-        tools:layout="@layout/fragment_intial" />
+        android:id="@+id/initialFragment"
+        android:name="com.mdev.apsche.InitialFragment"
+        android:label="fragment_initial"
+        tools:layout="@layout/fragment_initial">
+        <action
+            android:id="@+id/action_initialFragment_to_SignInFragment"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_initialFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.mdev.apsche.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:popUpTo="@+id/signInFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_homeFragment"
+            app:popUpTo="@+id/initialFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.mdev.apsche.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_signInFragment"
+            app:popUpTo="@+id/signUpFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.mdev.apsche.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            app:popUpTo="@+id/homeFragment"
+            app:popUpToInclusive="true"
+            android:id="@+id/action_homeFragment_to_noticeFragment"
+            app:destination="@id/noticeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addDetailsFragment"
+            app:destination="@id/addDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/noticeFragment"
+        android:name="com.mdev.apsche.NoticeFragment"
+        android:label="NoticeFragment" >
+        <action
+            app:popUpTo="@+id/noticeFragment"
+            app:popUpToInclusive="true"
+            android:id="@+id/action_noticeFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addDetailsFragment"
+        android:name="com.mdev.apsche.AddDetailsFragment"
+        android:label="fragment_add_details"
+        tools:layout="@layout/fragment_add_details" />
 </navigation>

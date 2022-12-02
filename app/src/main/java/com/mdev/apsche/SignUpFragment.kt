@@ -1,59 +1,94 @@
 package com.mdev.apsche
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import com.mdev.apsche.database.UserDetailsDatabase
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SignUpFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SignUpFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    //intializing variables
+    var name:String = ""
+    var email:String = ""
+    var password:String = ""
+    var confirmpassword:String = ""
+    var errorMessage:String=""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        PrivateValues.showMenu = false
+        val activity = activity as AppCompatActivity?
+        if (activity != null) {
+            activity.invalidateOptionsMenu()
+        }
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up, container, false)
+
+        val view = inflater.inflate(R.layout.fragment_sign_up, container, false);
+        val nameTextView = view.findViewById<TextView>(R.id.inputNameSignUp)
+        val emailTextView = view.findViewById<TextView>(R.id.inputEmailSignUp)
+        val passwordTextView = view.findViewById<TextView>(R.id.inputPasswordSignUp)
+        val confirmPasswordTextView = view.findViewById<TextView>(R.id.inputConfirmPasswordSignUp)
+        val errorTextView = view.findViewById<TextView>(R.id.errorTextViewSignUp)
+        val database = UserDetailsDatabase(requireActivity())
+        val signUpButton =  view.findViewById<Button>(R.id.signUpScreenSignUpButton)
+        signUpButton.setOnClickListener{
+            errorTextView.text=""
+            name = nameTextView.text.toString()
+            email = emailTextView.text.toString()
+            password = passwordTextView.text.toString()
+            confirmpassword = confirmPasswordTextView.text.toString()
+            if(validateFields()){
+                if(!database.checkEmail(email)) {
+                    database.insertUser(email, name, password)
+                    Log.d("reached here","signup")
+                    view.findNavController().popBackStack()
+                }
+                else{
+                    errorTextView.text = "Emailid already exists"
+                }
+            }else{
+                errorTextView.text = errorMessage
+            }
+
+        }
+        val signInTextview =  view.findViewById<TextView>(R.id.signInInSignUpTextView)
+        signInTextview.setOnClickListener{
+            errorTextView.text=""
+            view.findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
+
+        }
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SignUpFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SignUpFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    fun validateFields(): Boolean {
+
+        if (name == "") {
+            errorMessage = "Please enter the name"
+            return false
+        } else if (email == "") {
+            errorMessage = "Please enter the email"
+            return false
+        } else if (password == "") {
+            errorMessage = "Please enter the password"
+            return false
+        } else if (confirmpassword == "") {
+            errorMessage = "Please confirm the password"
+            return false
+        } else if (password != confirmpassword) {
+            errorMessage = "Password and Confirm password doesnot match"
+            return false
+        } else {
+            return true
+        }
     }
 }
