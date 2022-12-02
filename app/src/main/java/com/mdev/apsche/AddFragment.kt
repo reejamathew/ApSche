@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.webkit.ValueCallback
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.navigation.findNavController
 import com.mdev.apsche.database.ApartmentDatabase
 
 class AddDetailsFragment : Fragment() {
@@ -58,7 +60,7 @@ class AddDetailsFragment : Fragment() {
 //                val sharedPreferences =  activity?.getSharedPreferences("userDetails", Context.MODE_PRIVATE)
                 val emailId = "test@gmail.com"
                 //insertion
-                databaseClass.insertRecipe(
+                val insertAppartment = databaseClass.insertAppartment(
                     tenantName.text.toString(),
                     aptNo.text.toString(),
                     phoneNo.text.toString(),
@@ -67,7 +69,17 @@ class AddDetailsFragment : Fragment() {
                     beds.text.toString(),
                     emailId
                 )
-                Log.d("insert123", aptNo.text.toString(),)
+                if(insertAppartment){
+                    view.findNavController().navigate(R.id.action_addDetailsFragment_to_detailsFragment, Bundle().apply {
+                        putString("aptId", "1")
+                        putString("aptNo", aptNo.text.toString())
+                        putString("tenant_name", tenantName.text.toString())
+                        putString("phone_no", phoneNo.text.toString())
+                        putString("lease_period", leasePeriod.text.toString())
+                        putString("lease_amount", leaseAmount.text.toString())
+                        putString("beds", beds.text.toString())
+                    })
+                }
             }
         })
 

@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import com.mdev.apsche.model.Apartment
+import java.util.*
 
 class ApartmentDatabase (context: Context?) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     companion object{
@@ -39,7 +40,7 @@ class ApartmentDatabase (context: Context?) : SQLiteOpenHelper(context, DATABASE
         db.execSQL("DROP TABLE IF EXISTS $APARTMENT_TABLE")
     }
 
-    fun insertRecipe(tenant_name: String?, apt_no: String?, phone_no: String?, lease_amount: String?,lease_period: String?, beds: String?, email_id: String?): Boolean {
+    fun insertAppartment(tenant_name: String?, apt_no: String?, phone_no: String?, lease_amount: String?,lease_period: String?, beds: String?, email_id: String?): Boolean {
         val sqLiteDatabase = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(COL_TENANT_NAME, tenant_name)
@@ -54,13 +55,10 @@ class ApartmentDatabase (context: Context?) : SQLiteOpenHelper(context, DATABASE
 
         val cursor = sqLiteDatabase.insert(APARTMENT_TABLE, null, contentValues)
         Log.d("recipeList", cursor.toString())
-        getApartmentDetails("test@gmail.com")
         return !cursor.equals(-1)
     }
-
     fun getApartmentDetails(email_id: String?): ArrayList<Apartment> {
         val sqliteDatabase = this.readableDatabase
-        Log.d("email in db", email_id.toString())
         val cursor =  sqliteDatabase.rawQuery("SELECT * FROM $APARTMENT_TABLE WHERE $COL_EMAIL_ID=?", arrayOf(email_id))
         val apartmentList: ArrayList<Apartment> = ArrayList()
 
@@ -83,5 +81,51 @@ class ApartmentDatabase (context: Context?) : SQLiteOpenHelper(context, DATABASE
         Log.d("recipeList", apartmentList.toString())
         return apartmentList;
     }
+    fun getApartmentDetailsById(aptId: String?): ArrayList<Apartment> {
+        Log.d("id",aptId.toString())
+        val sqliteDatabase = this.readableDatabase
+        val cursor =  sqliteDatabase.rawQuery("SELECT * FROM $APARTMENT_TABLE WHERE $COL_APARTMENT_ID=?", arrayOf(aptId))
+        val apartmentList: ArrayList<Apartment> = ArrayList()
+
+        if (cursor.moveToFirst()) {
+            do {
+                apartmentList.add(
+                    Apartment(
+                        cursor.getInt(0),
+                        cursor.getInt(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getInt(6)
+                    )
+                )
+            } while (cursor.moveToNext())
+
+        }
+        Log.d("recipeList", apartmentList.toString())
+        return apartmentList;
+    }
+
+    fun updateAppartment(aptId: String?, apt_no: String?, tenant_name: String?, phone_no: String?, lease_period: String?, lease_amount: String?, beds: String?): Boolean {
+        val sqLiteDatabase = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(COL_APARTMENT_ID, aptId)
+        contentValues.put(COL_APARTMENT_NO, apt_no)
+        contentValues.put(COL_TENANT_NAME, tenant_name)
+        contentValues.put(COL_PHONE_NUMBER, phone_no)
+        contentValues.put(COL_LEASE_PERIOD, lease_period)
+        contentValues.put(COL_LEASE_AMOUNT, lease_amount)
+        contentValues.put(COL_BEDS, beds)
+        contentValues.put(COL_EMAIL_ID, "test@gmail.com")
+
+        Log.d("content", contentValues.toString())
+
+        val cursor = sqLiteDatabase.update(APARTMENT_TABLE, contentValues, "$COL_APARTMENT_ID =$aptId",null)
+        Log.d("recipeList", cursor.toString())
+        getApartmentDetailsById(aptId)
+        return !cursor.equals(-1)
+    }
+
 
 }
