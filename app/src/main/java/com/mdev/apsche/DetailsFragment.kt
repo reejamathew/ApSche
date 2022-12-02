@@ -29,18 +29,18 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<TextView>(R.id.Aptno).text = requireArguments().getString("aptNo")
-        view.findViewById<TextView>(R.id.tenant_name).text = requireArguments().getString("tenant_name")
-        view.findViewById<TextView>(R.id.phone_no).text = requireArguments().getString("phone_no")
-        view.findViewById<TextView>(R.id.lease_period).text = requireArguments().getString("lease_period")
-        view.findViewById<TextView>(R.id.lease_amount).text = requireArguments().getString("lease_amount")
-        view.findViewById<TextView>(R.id.beds).text = requireArguments().getString("beds")
+        view.findViewById<TextView>(R.id.Aptno).text = "101"
+        view.findViewById<TextView>(R.id.tenant_name).text = "reeja"
+        view.findViewById<TextView>(R.id.phone_no).text = "1234567890"
+        view.findViewById<TextView>(R.id.lease_period).text = "12 months"
+        view.findViewById<TextView>(R.id.lease_amount).text = "100"
+        view.findViewById<TextView>(R.id.beds).text = "5/2"
 
         val editButton = view.findViewById<Button>(R.id.editButton);
 
         editButton.setOnClickListener(View.OnClickListener {
             view.findNavController().navigate(R.id.action_detailsFragment_to_editFragment, Bundle().apply {
-                putString("aptId", "1")
+               putString("aptId", "1")
             })
         })
     }

@@ -35,7 +35,7 @@ class NoticeFragment : Fragment() {
         val itemList: RecyclerView = view.findViewById(R.id.aptNoticeList)
 
         itemList.layoutManager = LinearLayoutManager(view.context);
-        val aptAdapter = ListItemRecyclerViewAdapter(arrayList)
+        val aptAdapter = NoticeItemRecyclerViewAdapter(arrayList)
         itemList.adapter =aptAdapter
         val homeButton =  view.findViewById<ImageButton>(R.id.homeButton)
         homeButton.setOnClickListener{
