@@ -5,8 +5,8 @@
 
     <item
         android:id="@+id/addFragment"
-        android:icon="@android:drawable/ic_menu_add"
-        android:title="Add"
-        app:showAsAction="always"/>
+        android:icon="@drawable/ic_action_name"
+        android:title="Logout"
+        app:showAsAction="always" />
 
 </menu>

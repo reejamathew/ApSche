@@ -4,6 +4,20 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
+<<<<<<< Updated upstream
 
 
+=======
+    <string name="initial_screen_text">All about your Apartment</string>
+    <string name="email">Email Address</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="name">Name</string>
+    <string name="no_account_exists">Don\'t have an account?</string>
+    <string name="welcome_back_text">Welcome Back to ApSche</string>
+    <string name="login_text">Login to your account</string>
+    <string name="welcome">Welcome to ApSche</string>
+    <string name="create_account">Create an account</string>
+    <string name="already_account">Already have an account?</string>
+>>>>>>> Stashed changes
 </resources>
