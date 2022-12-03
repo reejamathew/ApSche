@@ -73,8 +73,28 @@ class AddDetailsFragment : Fragment() {
 
 
     private fun checkAllFields(): Boolean {
+        if (aptNo.length() === 0) {
+            aptNo.error = "Apartment number is required"
+            return false
+        }
         if (tenantName.length() === 0) {
             tenantName.error = "Tenant Name is required"
+            return false
+        }
+        if (phoneNo.length() === 0) {
+            phoneNo.error = "Phone number is required"
+            return false
+        }
+        if (leaseAmount.length() === 0) {
+            leaseAmount.error = "Lease amount is required"
+            return false
+        }
+        if (leasePeriod.length() === 0) {
+            leasePeriod.error = "Lease information is required"
+            return false
+        }
+        if (beds.length() === 0) {
+            beds.error = "Beds and bath count is required"
             return false
         }
         // after all validation return true.
