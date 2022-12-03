@@ -11,7 +11,11 @@ import java.util.*
 class ApartmentDatabase (context: Context?) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     override fun onCreate(db: SQLiteDatabase) {
-        db.execSQL("CREATE TABLE $USER_DETAILS_TABLE("+"$COL_EMAIL_ID TEXT PRIMARY KEY ,"+" $COL_USER_NAME TEXT,"+" $COL_PASSWORD TEXT)")
+        db.execSQL("PRAGMA foreign_keys = ON")
+        db.execSQL("CREATE TABLE $USER_DETAILS_TABLE("+
+                "$COL_EMAIL_ID TEXT PRIMARY KEY ,"+
+                " $COL_USER_NAME TEXT,"+
+                " $COL_PASSWORD TEXT)")
 
         db.execSQL("CREATE TABLE $APARTMENT_TABLE(" +
                 "$COL_APARTMENT_ID INTEGER PRIMARY KEY AUTOINCREMENT,"+"$COL_APARTMENT_NO TEXT,"+
@@ -20,7 +24,8 @@ class ApartmentDatabase (context: Context?) : SQLiteOpenHelper(context, DATABASE
                 "$COL_LEASE_AMOUNT TEXT,"+
                 "$COL_LEASE_PERIOD TEXT,"+
                 "$COL_BEDS TEXT,"+
-                "$COL_EMAIL_ID TEXT)")
+                "$COL_EMAIL_ID TEXT,"+
+                "FOREIGN KEY($COL_EMAIL_ID) REFERENCES $USER_DETAILS_TABLE($COL_EMAIL_ID))")
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
