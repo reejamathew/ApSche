@@ -19,17 +19,18 @@ class InitialFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-
+        //setting value to show the menu in actionbar to false
         ApScheConstValues.showMenu = false
         val activity = activity as AppCompatActivity?
         if (activity != null) {
             activity.invalidateOptionsMenu()
         }
+
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_initial, container, false)
 
+        //button and actions
         val signInButton =  view.findViewById<Button>(R.id.initialSignIn)
-
         signInButton.setOnClickListener{
             view.findNavController().navigate(R.id.action_initialFragment_to_SignInFragment)
 

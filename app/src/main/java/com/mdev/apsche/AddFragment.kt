@@ -34,17 +34,17 @@ class AddDetailsFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_add_details, container, false)
 
-        val submitButton = view.findViewById<Button>(R.id.submitButton)
+        //intializing buttons and text fields
 
+        val submitButton = view.findViewById<Button>(R.id.submitButton)
         tenantName = view.findViewById<TextView>(R.id.tenantNameEditText)
         aptNo = view.findViewById<TextView>(R.id.aptNoEditText)
         phoneNo = view.findViewById<TextView>(R.id.phoneNoEditText)
         leaseAmount = view.findViewById<TextView>(R.id.leaseAmountEditText)
-      //  currency = view.findViewById<TextView>(R.id.currencyAmountEditText)
         leasePeriod = view.findViewById<TextView>(R.id.leasePeriodEditText)
         beds = view.findViewById<TextView>(R.id.bedsEditText)
-        var isAllFieldsChecked = false
 
+        var isAllFieldsChecked = false
 
 
         submitButton.setOnClickListener(View.OnClickListener { // store the returned value of the dedicated function which checks
@@ -60,30 +60,11 @@ class AddDetailsFragment : Fragment() {
 //                val sharedPreferences =  activity?.getSharedPreferences("userDetails", Context.MODE_PRIVATE)
                 val emailId = ApScheConstValues.useremail
                 //insertion
-                val insertAppartment = databaseClass.insertApartment(
-                    tenantName.text.toString(),
-                    aptNo.text.toString(),
-                    phoneNo.text.toString(),
-                    leaseAmount.text.toString(),
-                 //   currency.text.toString(),
-                    leasePeriod.text.toString(),
-                    beds.text.toString(),
-                    emailId
-                )
+
+                databaseClass.insertApartment(tenantName.text.toString(),aptNo.text.toString(),phoneNo.text.toString(),leaseAmount.text.toString(),leasePeriod.text.toString(),beds.text.toString(),emailId)
                 view.findNavController().popBackStack()
 
-//                if(insertAppartment){
-//                    view.findNavController().navigate(R.id.action_addDetailsFragment_to_detailsFragment, Bundle().apply {
-//                        putString("aptId", "1")
-//                        putString("aptNo", aptNo.text.toString())
-//                        putString("tenant_name", tenantName.text.toString())
-//                        putString("phone_no", phoneNo.text.toString())
-//                        putString("lease_period", leasePeriod.text.toString())
-//                        putString("lease_amount", leaseAmount.text.toString())
-//                        putString("currency",currency.text.toString())
-//                        putString("beds", beds.text.toString())
-//                    })
-   //             }
+
             }
         })
 

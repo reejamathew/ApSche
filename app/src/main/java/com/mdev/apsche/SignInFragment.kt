@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import com.mdev.apsche.database.UserDetailsDatabase
+import com.mdev.apsche.database.ApartmentDatabase
 
 class SignInFragment : Fragment() {
     var email:String = ""
@@ -22,23 +22,32 @@ class SignInFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //setting value to show the menu in actionbar to false
         ApScheConstValues.showMenu = false
         val activity = activity as AppCompatActivity?
         if (activity != null) {
             activity.invalidateOptionsMenu()
         }
 
+        //inflate view
         val view = inflater.inflate(R.layout.fragment_sign_in, container, false);
+
+        //intializing fields
         val emailTextView = view.findViewById<TextView>(R.id.inputEmailSignIn)
         val passwordTextView = view.findViewById<TextView>(R.id.inputPasswordSignIn)
         val errorTextView = view.findViewById<TextView>(R.id.errorTextViewSignIn)
-        val database = UserDetailsDatabase(requireActivity())
-
         val signInButton =  view.findViewById<Button>(R.id.signInScreenSignInButton)
+        val signUpTextView =  view.findViewById<TextView>(R.id.signUpInSignInTextView)
+
+        //intialize database
+        val database = ApartmentDatabase(requireActivity())
+
+        //button actions
         signInButton.setOnClickListener{
             email = emailTextView.text.toString()
             password = passwordTextView.text.toString()
             errorTextView.text=""
+            //validating and checking database for email and password
             if(validateFields()){
                 if(database.checkLogin(email,password)){
                     ApScheConstValues.useremail=email
@@ -47,13 +56,15 @@ class SignInFragment : Fragment() {
 
                 }
                 else{
+                    //email and password doesn't match with database
                     errorTextView.text = "Invalid credentials"
                 }
             }else{
+                //validation error
                 errorTextView.text = errorMessage
             }
         }
-        val signUpTextView =  view.findViewById<TextView>(R.id.signUpInSignInTextView)
+
         signUpTextView.setOnClickListener{
             errorTextView.text=""
             view.findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
@@ -61,6 +72,7 @@ class SignInFragment : Fragment() {
         }
         return view
     }
+    //validating email and password
     fun validateFields(): Boolean {
 
         if (email == "") {

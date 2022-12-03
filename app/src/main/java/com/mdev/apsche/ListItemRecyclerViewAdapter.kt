@@ -22,22 +22,22 @@ class ListItemRecyclerViewAdapter(
 ) : RecyclerView.Adapter<ListItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_item_list, parent, false)
-
+        //inflate view
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_item_list, parent, false)
         return ViewHolder(view)
 
     }
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        //setting each view value
         val aptDetailModel = aptList[position]
-       holder.aptNo.text = aptDetailModel.aptNo.toString()
+        holder.aptNo.text = aptDetailModel.aptNo.toString()
         holder.tenant.text=aptDetailModel.tenant_name
         holder.phone.text=aptDetailModel.phone_no
        var  apartId = aptList[position].aptId!!
-        Log.d("apartment numberinlist",apartId.toString())
+
+        //click action
         holder.itemView.setOnClickListener{
             val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(apartId)
             holder.itemView.findNavController().navigate(action)
@@ -45,7 +45,7 @@ class ListItemRecyclerViewAdapter(
     }
 
     override fun getItemCount(): Int {
-        d("appt sixze", aptList.size.toString())
+
         return aptList.size
     }
 

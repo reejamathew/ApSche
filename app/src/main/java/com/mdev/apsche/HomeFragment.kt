@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mdev.apsche.database.ApartmentDatabase
-import com.mdev.apsche.database.UserDetailsDatabase
 
 /**
  * A fragment representing a list of Items.
@@ -25,23 +24,27 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        //inflate layout
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        //setting value to show the menu in actionbar
         ApScheConstValues.showMenu = true
         val activity = activity as AppCompatActivity?
         if (activity != null) {
             activity.invalidateOptionsMenu()
         }
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
 
+        //intialize database and getting details by email
         val database = ApartmentDatabase(requireActivity())
-        // Set the adapter
         val arrayList= database.getApartmentDetails(ApScheConstValues.useremail)
 
+        // Set the adapter
         val itemList: RecyclerView = view.findViewById(R.id.aptMainList)
-
         itemList.layoutManager = LinearLayoutManager(view.context);
         val aptAdapter = ListItemRecyclerViewAdapter(arrayList)
         itemList.adapter =aptAdapter
 
+        //button and actions
         val noticeButton =  view.findViewById<ImageButton>(R.id.noticeButton)
         noticeButton.setOnClickListener{
             view.findNavController().navigate(R.id.action_homeFragment_to_noticeFragment)

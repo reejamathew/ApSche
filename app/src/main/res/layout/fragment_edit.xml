@@ -32,7 +32,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Aptno"
+                        android:text="@string/aptno"
                         android:textSize="24sp" />
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -51,7 +51,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Tenant Name"
+                        android:text="@string/tenant_name"
                         android:textSize="24sp" />
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -71,7 +71,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Phone No"
+                        android:text="@string/phone_no"
                         android:textSize="24sp" />
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/phone_no"
@@ -89,45 +89,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Lease Period"
-                        android:textSize="24sp" />
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/lease_period"
-                        android:layout_width="148dp"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:lines="1" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Lease Information"
-                        android:textSize="24sp" />
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/lease_infor"
-                        android:layout_width="148dp"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:lines="1" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Lease Amount"
+                        android:text="@string/lease_amount"
                         android:textSize="24sp" />
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/lease_amount"
@@ -146,7 +108,26 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Beds"
+                        android:text="@string/lease_period"
+                        android:textSize="24sp" />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lease_period"
+                        android:layout_width="148dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:lines="1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/beds"
                         android:textSize="24sp" />
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/beds"
@@ -170,6 +151,7 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </ScrollView>
 
 

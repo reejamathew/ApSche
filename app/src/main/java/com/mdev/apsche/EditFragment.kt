@@ -23,7 +23,6 @@ class EditFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
         return inflater.inflate(R.layout.fragment_edit, container, false)
     }
 
@@ -32,17 +31,20 @@ class EditFragment : Fragment() {
         val aptId = requireArguments().getString("aptId")
         val databaseClass = ApartmentDatabase(requireActivity())
         val apartment: Apartment = databaseClass.getApartmentDetailsById(aptId)[0]
+
+        //intializing fields
+        val editButton = view.findViewById<Button>(R.id.editButton);
         view.findViewById<TextView>(R.id.Aptno).text = apartment.aptNo.toString()
         view.findViewById<TextView>(R.id.tenant_name).text = apartment.tenant_name.toString()
         view.findViewById<TextView>(R.id.phone_no).text = apartment.phone_no.toString()
         view.findViewById<TextView>(R.id.lease_period).text = apartment.lease_information
         view.findViewById<TextView>(R.id.lease_amount).text = apartment.lease_amount.toString()
         view.findViewById<TextView>(R.id.beds).text = apartment.beds_bath
-        val editButton = view.findViewById<Button>(R.id.editButton);
 
+        //button action
         editButton.setOnClickListener(View.OnClickListener {
-            //insertion
-            val updateAppartment = databaseClass.updateApartment(
+            //updating values
+            databaseClass.updateApartment(
                 aptId,
                 view.findViewById<TextView>(R.id.Aptno).text.toString(),
                 view.findViewById<TextView>(R.id.tenant_name).text.toString(),
@@ -50,10 +52,10 @@ class EditFragment : Fragment() {
                 view.findViewById<TextView>(R.id.lease_period).text.toString(),
                 view.findViewById<TextView>(R.id.lease_amount).text.toString(),
                 view.findViewById<TextView>(R.id.beds).text.toString(),ApScheConstValues.useremail
+
             )
+            view.findNavController().popBackStack()
+            view.findNavController().popBackStack()
         })
-
-//            view.findNavController().navigate(R.id.action_detailsFragment_to_editFragment)
-
     }
 }

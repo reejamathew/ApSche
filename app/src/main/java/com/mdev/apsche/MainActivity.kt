@@ -19,6 +19,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        ApScheConstValues.useremail=""
+        ApScheConstValues.showMenu=false
         var toolbar =  findViewById<MaterialToolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -38,14 +40,13 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Log.d("dhfggjgkgkgkg","fhfhfh")
+       // when any menuitem clicked
         val navController = findNavController(R.id.nav_host_fragment)
         showPopup()
-      //  navController.navigate(R.id.action_signInFragment_to_homeFragment)
         return  item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
 
     }
-
+//popup to show logout
     private fun showPopup() {
         val alert: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this@MainActivity)
         alert.setMessage("Are you sure you want to Logout?")
@@ -57,6 +58,7 @@ class MainActivity : AppCompatActivity() {
             alert1.show()
         }
     }
+    //logging out
     private fun logOut(){
         val i = Intent(this, MainActivity::class.java)
 // set the new task and clear flags

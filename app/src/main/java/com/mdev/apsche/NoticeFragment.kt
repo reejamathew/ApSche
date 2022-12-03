@@ -28,15 +28,17 @@ class NoticeFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_notice, container, false)
 
+        //intializing database and fetching values
         val database = ApartmentDatabase(requireActivity())
+        val arrayList= database.getApartmentDetailsByNoticeInformation("notice",ApScheConstValues.useremail)
+
         // Set the adapter
-        val arrayList= database.getApartmentDetailsByNoticeInformation("notice")
-
         val itemList: RecyclerView = view.findViewById(R.id.aptNoticeList)
-
         itemList.layoutManager = LinearLayoutManager(view.context);
         val aptAdapter = NoticeItemRecyclerViewAdapter(arrayList)
         itemList.adapter =aptAdapter
+
+        //button and action
         val homeButton =  view.findViewById<ImageButton>(R.id.homeButton)
         homeButton.setOnClickListener{
             view.findNavController().navigate(R.id.action_noticeFragment_to_homeFragment)

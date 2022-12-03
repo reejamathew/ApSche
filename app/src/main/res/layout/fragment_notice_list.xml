@@ -35,5 +35,3 @@
         android:layout_weight="1"
         android:textColor="@color/theme_color" />
 </LinearLayout>
-
-

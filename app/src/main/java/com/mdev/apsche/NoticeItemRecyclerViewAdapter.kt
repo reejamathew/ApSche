@@ -22,21 +22,20 @@ class NoticeItemRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticeItemRecyclerViewAdapter.ViewHolder {
 
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_notice_list, parent, false)
-//        view.setOnClickListener{
-//             view.findNavController().navigate(R.id.action_noticeFragment_to_detailsFragment)
-//        }
+        //inflate view
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_notice_list, parent, false)
         return NoticeItemRecyclerViewAdapter.ViewHolder(view)
 
     }
     override fun onBindViewHolder(holder: NoticeItemRecyclerViewAdapter.ViewHolder, position: Int) {
+       //setting view with values
         val aptDetailModel = aptList[position]
         holder.aptNo.text = aptDetailModel.aptNo.toString()
         holder.tenant.text=aptDetailModel.tenant_name
         holder.phone.text=aptDetailModel.phone_no
         var  apartId = aptList[position].aptId!!
-        Log.d("apartment numberinlist",apartId.toString())
+
+        //list click action
         holder.itemView.setOnClickListener{
             val action = NoticeFragmentDirections.actionNoticeFragmentToDetailsFragment(apartId)
             holder.itemView.findNavController().navigate(action)
@@ -45,7 +44,6 @@ class NoticeItemRecyclerViewAdapter(
 
 
     override fun getItemCount(): Int {
-        Log.d("appt sixze", aptList.size.toString())
         return aptList.size
     }
 

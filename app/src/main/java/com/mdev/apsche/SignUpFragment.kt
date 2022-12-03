@@ -8,23 +8,31 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import com.mdev.apsche.database.UserDetailsDatabase
+import org.json.JSONObject
+import com.loopj.android.http.AsyncHttpClient
+import com.loopj.android.http.AsyncHttpResponseHandler
+import com.mdev.apsche.database.ApartmentDatabase
+import cz.msebera.android.httpclient.Header
 
+interface OnJSONResponseCallback {
+    fun onJSONResponse(success: Boolean, response: Boolean)
+}
 class SignUpFragment : Fragment() {
     //intializing variables
-    var name:String = ""
-    var email:String = ""
-    var password:String = ""
-    var confirmpassword:String = ""
-    var errorMessage:String=""
+    var name: String = ""
+    var email: String = ""
+    var password: String = ""
+    var confirmpassword: String = ""
+    var errorMessage: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        //setting value to show the menu in actionbar to false
         ApScheConstValues.showMenu = false
         val activity = activity as AppCompatActivity?
         if (activity != null) {
@@ -34,61 +42,115 @@ class SignUpFragment : Fragment() {
         // Inflate the layout for this fragment
 
         val view = inflater.inflate(R.layout.fragment_sign_up, container, false);
+
+        //intializing the fields
         val nameTextView = view.findViewById<TextView>(R.id.inputNameSignUp)
         val emailTextView = view.findViewById<TextView>(R.id.inputEmailSignUp)
         val passwordTextView = view.findViewById<TextView>(R.id.inputPasswordSignUp)
         val confirmPasswordTextView = view.findViewById<TextView>(R.id.inputConfirmPasswordSignUp)
         val errorTextView = view.findViewById<TextView>(R.id.errorTextViewSignUp)
-        val database = UserDetailsDatabase(requireActivity())
-        val signUpButton =  view.findViewById<Button>(R.id.signUpScreenSignUpButton)
-        signUpButton.setOnClickListener{
-            errorTextView.text=""
+        val signUpButton = view.findViewById<Button>(R.id.signUpScreenSignUpButton)
+        val signInTextview = view.findViewById<TextView>(R.id.signInInSignUpTextView)
+
+        //intialize database
+        val database = ApartmentDatabase(requireActivity())
+
+        //button actions
+        signUpButton.setOnClickListener {
+            errorTextView.text = ""
             name = nameTextView.text.toString()
             email = emailTextView.text.toString()
             password = passwordTextView.text.toString()
             confirmpassword = confirmPasswordTextView.text.toString()
-            if(validateFields()){
-                if(!database.checkEmail(email)) {
-                    database.insertUser(email, name, password)
-                    Log.d("reached here","signup")
-                    view.findNavController().popBackStack()
+            if (validateFields()) {
+//                verifyEmailPattern(email) { isEmailValid ->
+//                    if (isEmailValid as Boolean) {
+                        if (!database.checkEmail(email)) {
+                            database.insertUser(email, name, password)
+                            Log.d("reached here", "signup")
+                            view.findNavController().popBackStack()
+                        } else {
+                            errorTextView.text = "Emailid already exists"
+                        }
+
+
+                }else{
+                    errorTextView.text = errorMessage
                 }
-                else{
-                    errorTextView.text = "Emailid already exists"
+
+            }
+            signInTextview.setOnClickListener {
+                errorTextView.text = ""
+                view.findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
+
+            }
+            return view
+        }
+//validating all the fields
+        fun validateFields(): Boolean {
+
+            if (name == "") {
+                errorMessage = "Please enter the name"
+                return false
+            } else if (email == "") {
+                errorMessage = "Please enter the email"
+                return false
+            } else if (password == "") {
+                errorMessage = "Please enter the password"
+                return false
+            } else if (confirmpassword == "") {
+                errorMessage = "Please confirm the password"
+                return false
+            } else if (password != confirmpassword) {
+                errorMessage = "Password and Confirm password doesnot match"
+                return false
+            } else {
+                return true
+            }
+        }
+    }
+
+//verifying whether valid email
+    private fun verifyEmailPattern(email: String, callback: (Boolean?) -> Unit) {
+        val url = "https://emailvalidation.abstractapi.com/v1/?" +
+                "api_key=c085091fd2434a3ea2bf6c0c19e97c14&" +
+                "email=" + email;
+        var isEmailValid = false
+
+        AsyncHttpClient().get(url, object : AsyncHttpResponseHandler() {
+            override fun onSuccess(
+                statusCode: Int,
+                headers: Array<Header?>?,
+                responseBody: ByteArray?
+            ) {
+                val response = String(responseBody!!)
+
+                val obj = JSONObject(response)
+                isEmailValid = obj.getJSONObject("is_valid_format").getBoolean("value")
+                callback.invoke(isEmailValid);
+                if (!isEmailValid) {
+//                    Toast.makeText(
+//                        this@SignUpFragment.requireActivity(),
+//                        "Please enter valid email id",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
                 }
-            }else{
-                errorTextView.text = errorMessage
             }
 
-        }
-        val signInTextview =  view.findViewById<TextView>(R.id.signInInSignUpTextView)
-        signInTextview.setOnClickListener{
-            errorTextView.text=""
-            view.findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
-
-        }
-        return view
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<Header?>?,
+                responseBody: ByteArray?,
+                error: Throwable?
+            ) {
+                Log.d("response", error.toString())
+                callback.invoke(isEmailValid);
+//                Toast.makeText(
+//                    this.requireActivity(),
+//                    "Please enter valid email id",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+            }
+        })
     }
 
-    fun validateFields(): Boolean {
-
-        if (name == "") {
-            errorMessage = "Please enter the name"
-            return false
-        } else if (email == "") {
-            errorMessage = "Please enter the email"
-            return false
-        } else if (password == "") {
-            errorMessage = "Please enter the password"
-            return false
-        } else if (confirmpassword == "") {
-            errorMessage = "Please confirm the password"
-            return false
-        } else if (password != confirmpassword) {
-            errorMessage = "Password and Confirm password doesnot match"
-            return false
-        } else {
-            return true
-        }
-    }
-}
