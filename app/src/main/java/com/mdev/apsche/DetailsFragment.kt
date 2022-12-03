@@ -55,7 +55,19 @@ class DetailsFragment : Fragment() {
                putString("aptId", "1")
             })
         })
+        val currencyText = view.findViewById<TextView>(R.id.currencyEditText)
+        val currencyButton = view.findViewById<Button>(R.id.currencyConvertButton);
 
+        currencyButton.setOnClickListener(View.OnClickListener {
+            if(validateCurrency(currencyText.text.toString())){
+
+            }
+            })
+        }
+
+    fun validateCurrency(currencytext:String):Boolean{
+        val arrayCurrency = arrayOf("USD","INR","AED","EUR")
+        return arrayCurrency.contains(currencytext)
     }
 
 }
