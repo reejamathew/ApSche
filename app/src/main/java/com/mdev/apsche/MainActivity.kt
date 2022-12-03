@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         print("on create")
-      if(PrivateValues.showMenu) {
+      if(ApScheConstValues.showMenu) {
 
             menuInflater.inflate(R.menu.menu_toolbar, menu)
         }

@@ -35,24 +35,25 @@ class EditFragment : Fragment() {
         view.findViewById<TextView>(R.id.Aptno).text = apartment.aptNo.toString()
         view.findViewById<TextView>(R.id.tenant_name).text = apartment.tenant_name.toString()
         view.findViewById<TextView>(R.id.phone_no).text = apartment.phone_no.toString()
-        view.findViewById<TextView>(R.id.lease_period).text = apartment.lease_period.toString()
+        view.findViewById<TextView>(R.id.lease_period).text = apartment.lease_information
         view.findViewById<TextView>(R.id.lease_amount).text = apartment.lease_amount.toString()
-        view.findViewById<TextView>(R.id.beds).text = apartment.beds.toString()
+        view.findViewById<TextView>(R.id.beds).text = apartment.beds_bath
         val editButton = view.findViewById<Button>(R.id.editButton);
 
         editButton.setOnClickListener(View.OnClickListener {
             //insertion
-            val updateAppartment = databaseClass.updateAppartment(
+            val updateAppartment = databaseClass.updateApartment(
                 aptId,
                 view.findViewById<TextView>(R.id.Aptno).text.toString(),
                 view.findViewById<TextView>(R.id.tenant_name).text.toString(),
                 view.findViewById<TextView>(R.id.phone_no).text.toString(),
                 view.findViewById<TextView>(R.id.lease_period).text.toString(),
                 view.findViewById<TextView>(R.id.lease_amount).text.toString(),
-                view.findViewById<TextView>(R.id.beds).text.toString()
+                view.findViewById<TextView>(R.id.beds).text.toString(),ApScheConstValues.useremail
             )
+        })
 
 //            view.findNavController().navigate(R.id.action_detailsFragment_to_editFragment)
-        })
+
     }
 }

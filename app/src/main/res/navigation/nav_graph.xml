@@ -93,6 +93,9 @@
         android:name="com.mdev.apsche.DetailsFragment"
         android:label="DetailsFragment"
         tools:layout="@layout/fragment_details">
+        <argument
+            android:name="apartmentId"
+            app:argType="integer" />
         <action
             android:id="@+id/action_detailsFragment_to_editFragment"
             app:destination="@id/editFragment" />

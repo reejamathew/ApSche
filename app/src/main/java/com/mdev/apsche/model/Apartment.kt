@@ -5,7 +5,8 @@ data class Apartment(
     var aptNo: Int?,
     var tenant_name: String,
     var phone_no: String,
-    var lease_period: String,
-    var lease_amount: String,
-    var beds: Int
+    var lease_information: String,
+    var lease_amount: Int?,
+
+    var beds_bath: String
 )

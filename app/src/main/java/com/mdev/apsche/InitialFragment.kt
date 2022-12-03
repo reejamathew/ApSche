@@ -20,7 +20,7 @@ class InitialFragment : Fragment() {
     ): View? {
 
 
-        PrivateValues.showMenu = false
+        ApScheConstValues.showMenu = false
         val activity = activity as AppCompatActivity?
         if (activity != null) {
             activity.invalidateOptionsMenu()

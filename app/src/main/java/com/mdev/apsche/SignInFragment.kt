@@ -22,7 +22,7 @@ class SignInFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        PrivateValues.showMenu = false
+        ApScheConstValues.showMenu = false
         val activity = activity as AppCompatActivity?
         if (activity != null) {
             activity.invalidateOptionsMenu()
@@ -41,6 +41,8 @@ class SignInFragment : Fragment() {
             errorTextView.text=""
             if(validateFields()){
                 if(database.checkLogin(email,password)){
+                    ApScheConstValues.useremail=email
+                    ApScheConstValues.password=password
                     view.findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
 
                 }

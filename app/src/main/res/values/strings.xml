@@ -2,7 +2,6 @@
     <string name="app_name">ApSche</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
-    <string name="intial_screen_text">All about your Apartment</string>
     <string name="helloText">Hello</string>
     <string name="welcomeText">Welcome !!</string>
     <string name="createAccountText">Create an account</string>
@@ -13,12 +12,13 @@
     <string name="confirmPassword">Confirm Password</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
-    <string name="aptno">Enter Apartment Number</string>
-    <string name="tenant_name">Enter Tenant Name</string>
-    <string name="phone_no">Enter Phone Number</string>
-    <string name="lease_amount">Enter Lease Amount</string>
-    <string name="lease_period">Enter Lease Period</string>
-    <string name="beds">Enter Beds Count</string>
+    <string name="aptno">Apartment Number</string>
+    <string name="tenant_name">Tenant Name</string>
+    <string name="phone_no">Phone Number</string>
+    <string name="lease_amount">Lease Amount</string>
+    <string name="lease_currency">Currency code</string>
+    <string name="lease_period">Lease Information</string>
+    <string name="beds">Bed and Bath Count</string>
     <string name="add_details">Add Details</string>
     <string name="submit">Submit</string>
     <string name="hello_blank_fragment">hello_blank_fragment</string>

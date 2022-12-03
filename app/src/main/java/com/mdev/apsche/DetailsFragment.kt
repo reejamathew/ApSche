@@ -1,6 +1,7 @@
 package com.mdev.apsche
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +11,23 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.findNavController
 import com.mdev.apsche.database.ApartmentDatabase
+import com.mdev.apsche.model.Apartment
 
 
 class DetailsFragment : Fragment() {
+    lateinit var apartment:Apartment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Toast.makeText(this@DetailsFragment.requireActivity(), "Apartment details added successfully", Toast.LENGTH_SHORT).show()
+      //  Toast.makeText(this@DetailsFragment.requireActivity(), "Apartment details added successfully", Toast.LENGTH_SHORT).show()
+       val aptId = DetailsFragmentArgs.fromBundle(requireArguments()).apartmentId
+       Log.d("details screen",aptId.toString())
+        val database = ApartmentDatabase(requireActivity())
+        // Set the adapter
+        val apartmentList= database.getApartmentDetailsById(aptId.toString())
+        apartment = apartmentList[0]
+        Log.d("apartment details ",apartment.aptNo.toString()+apartment.tenant_name+apartment.phone_no+apartment.lease_information)
+
     }
 
     override fun onCreateView(
@@ -29,12 +40,13 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<TextView>(R.id.Aptno).text = "101"
-        view.findViewById<TextView>(R.id.tenant_name).text = "reeja"
-        view.findViewById<TextView>(R.id.phone_no).text = "1234567890"
-        view.findViewById<TextView>(R.id.lease_period).text = "12 months"
-        view.findViewById<TextView>(R.id.lease_amount).text = "100"
-        view.findViewById<TextView>(R.id.beds).text = "5/2"
+        Log.d("apartment no:",apartment.aptNo.toString())
+        view.findViewById<TextView>(R.id.Aptno).text = apartment.aptNo.toString()
+        view.findViewById<TextView>(R.id.tenant_name).text = apartment.tenant_name
+        view.findViewById<TextView>(R.id.phone_no).text = apartment.phone_no
+        view.findViewById<TextView>(R.id.lease_period).text = apartment.lease_information
+        view.findViewById<TextView>(R.id.lease_amount).text = apartment.lease_amount.toString()
+        view.findViewById<TextView>(R.id.beds).text = apartment.beds_bath
 
         val editButton = view.findViewById<Button>(R.id.editButton);
 
@@ -43,6 +55,7 @@ class DetailsFragment : Fragment() {
                putString("aptId", "1")
             })
         })
+
     }
 
 }

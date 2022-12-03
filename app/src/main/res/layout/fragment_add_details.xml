@@ -114,6 +114,11 @@
                     android:lines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
+
+
+
+
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/leasePeriodContainer"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"

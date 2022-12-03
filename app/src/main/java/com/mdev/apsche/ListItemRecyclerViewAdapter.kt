@@ -1,43 +1,51 @@
 package com.mdev.apsche
 
 import android.util.Log
-import androidx.recyclerview.widget.RecyclerView
+import android.util.Log.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.findNavController
-
+import androidx.recyclerview.widget.RecyclerView
+import com.mdev.apsche.model.Apartment
 import com.mdev.apsche.placeholder.PlaceholderContent.PlaceholderItem
+
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
  * TODO: Replace the implementation with code for your data type.
  */
 class ListItemRecyclerViewAdapter(
-    private val aptList: List<ApartmentMainModel>
+    private val aptList: List<Apartment>
 ) : RecyclerView.Adapter<ListItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.fragment_item_list, parent, false)
-        view.setOnClickListener{
-          view.findNavController().navigate(R.id.action_homeFragment_to_detailsFragment)
-        }
+
         return ViewHolder(view)
 
     }
 
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val aptDetailModel = aptList[position]
        holder.aptNo.text = aptDetailModel.aptNo.toString()
-        holder.tenant.text=aptDetailModel.tenant
-        holder.phone.text=aptDetailModel.phoneno.toString()
+        holder.tenant.text=aptDetailModel.tenant_name
+        holder.phone.text=aptDetailModel.phone_no
+       var  apartId = aptList[position].aptId!!
+        Log.d("apartment numberinlist",apartId.toString())
+        holder.itemView.setOnClickListener{
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(apartId)
+            holder.itemView.findNavController().navigate(action)
+        }
     }
 
     override fun getItemCount(): Int {
-        Log.d("appt sixze", aptList.size.toString())
+        d("appt sixze", aptList.size.toString())
         return aptList.size
     }
 

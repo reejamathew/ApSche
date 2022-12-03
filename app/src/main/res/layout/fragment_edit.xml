@@ -136,6 +136,26 @@
                         android:inputType="textPersonName"
                         android:lines="1" />
                 </LinearLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/leaseCurrencyContainer"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="24dp"
+                    android:hint="@string/lease_amount"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/phoneNumberContainer">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/leaseCurrencyEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/lease_currency"
+                        android:inputType="numberDecimal"
+                        android:lines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

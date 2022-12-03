@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.mdev.apsche.database.ApartmentDatabase
 
 
 class NoticeFragment : Fragment() {
@@ -19,7 +20,7 @@ class NoticeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        PrivateValues.showMenu = true
+        ApScheConstValues.showMenu = true
         val activity = activity as AppCompatActivity?
         if (activity != null) {
             activity.invalidateOptionsMenu()
@@ -27,10 +28,9 @@ class NoticeFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_notice, container, false)
 
+        val database = ApartmentDatabase(requireActivity())
         // Set the adapter
-        val arrayList= ArrayList<ApartmentMainModel>()
-        arrayList.add(ApartmentMainModel(100,"Reeja",9057828085))
-        arrayList.add(ApartmentMainModel(101,"Jeeva",9057828085) )
+        val arrayList= database.getApartmentDetailsByNoticeInformation("notice")
 
         val itemList: RecyclerView = view.findViewById(R.id.aptNoticeList)
 

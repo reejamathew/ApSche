@@ -11,6 +11,8 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.mdev.apsche.database.ApartmentDatabase
+import com.mdev.apsche.database.UserDetailsDatabase
 
 /**
  * A fragment representing a list of Items.
@@ -23,17 +25,16 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        PrivateValues.showMenu = true
+        ApScheConstValues.showMenu = true
         val activity = activity as AppCompatActivity?
         if (activity != null) {
             activity.invalidateOptionsMenu()
         }
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
+        val database = ApartmentDatabase(requireActivity())
         // Set the adapter
-        val arrayList= ArrayList<ApartmentMainModel>()
-        arrayList.add(ApartmentMainModel(100,"Reeja",9057828085))
-        arrayList.add(ApartmentMainModel(101,"Jeeva",9057828085) )
+        val arrayList= database.getApartmentDetails(ApScheConstValues.useremail)
 
         val itemList: RecyclerView = view.findViewById(R.id.aptMainList)
 
