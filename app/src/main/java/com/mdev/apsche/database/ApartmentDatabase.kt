@@ -114,7 +114,7 @@ class ApartmentDatabase (context: Context?) : SQLiteOpenHelper(context, DATABASE
     fun getApartmentDetailsByNoticeInformation(notice: String?,email:String?): ArrayList<Apartment> {
 
         val sqliteDatabase = this.readableDatabase
-        val cursor =  sqliteDatabase.rawQuery("SELECT * FROM $APARTMENT_TABLE WHERE $COL_LEASE_PERIOD LIKE ? AND $COL_EMAIL_ID=? ", arrayOf(notice,email))
+        val cursor =  sqliteDatabase.rawQuery("SELECT * FROM $APARTMENT_TABLE WHERE $COL_LEASE_PERIOD LIKE '%'||?||'%' AND $COL_EMAIL_ID=? ", arrayOf(notice,email))
         val apartmentList: ArrayList<Apartment> = ArrayList()
 
         if (cursor.moveToFirst()) {

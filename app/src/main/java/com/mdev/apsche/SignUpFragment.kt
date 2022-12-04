@@ -63,8 +63,7 @@ class SignUpFragment : Fragment() {
             password = passwordTextView.text.toString()
             confirmpassword = confirmPasswordTextView.text.toString()
             if (validateFields()) {
-//                verifyEmailPattern(email) { isEmailValid ->
-//                    if (isEmailValid as Boolean) {
+
                         if (!database.checkEmail(email)) {
                             database.insertUser(email, name, password)
                             Log.d("reached here", "signup")
