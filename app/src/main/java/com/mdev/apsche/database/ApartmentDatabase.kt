@@ -22,8 +22,8 @@ class ApartmentDatabase (context: Context?) : SQLiteOpenHelper(context, DATABASE
                 "$COL_TENANT_NAME TEXT,"+
                 "$COL_PHONE_NUMBER TEXT,"+
                 "$COL_LEASE_AMOUNT TEXT,"+
-                "$COL_LEASE_PERIOD TEXT,"+
-                "$COL_BEDS TEXT,"+
+                "$COL_LEASE_INFORMATION TEXT,"+
+                "$COL_BEDS_BATH TEXT,"+
                 "$COL_EMAIL_ID TEXT,"+
                 "FOREIGN KEY($COL_EMAIL_ID) REFERENCES $USER_DETAILS_TABLE($COL_EMAIL_ID))")
     }
@@ -41,8 +41,8 @@ class ApartmentDatabase (context: Context?) : SQLiteOpenHelper(context, DATABASE
         contentValues.put(ApartmentDatabase.COL_TENANT_NAME, tenant_name)
         contentValues.put(ApartmentDatabase.COL_PHONE_NUMBER, phone_no)
         contentValues.put(ApartmentDatabase.COL_LEASE_AMOUNT, lease_amount)
-        contentValues.put(ApartmentDatabase.COL_LEASE_PERIOD, lease_period)
-        contentValues.put(ApartmentDatabase.COL_BEDS, beds)
+        contentValues.put(ApartmentDatabase.COL_LEASE_INFORMATION, lease_period)
+        contentValues.put(ApartmentDatabase.COL_BEDS_BATH, beds)
         contentValues.put(ApartmentDatabase.COL_EMAIL_ID, email_id)
 
         Log.d("content",contentValues.toString())
@@ -114,7 +114,7 @@ class ApartmentDatabase (context: Context?) : SQLiteOpenHelper(context, DATABASE
     fun getApartmentDetailsByNoticeInformation(notice: String?,email:String?): ArrayList<Apartment> {
 
         val sqliteDatabase = this.readableDatabase
-        val cursor =  sqliteDatabase.rawQuery("SELECT * FROM $APARTMENT_TABLE WHERE $COL_LEASE_PERIOD LIKE '%'||?||'%' AND $COL_EMAIL_ID=? ", arrayOf(notice,email))
+        val cursor =  sqliteDatabase.rawQuery("SELECT * FROM $APARTMENT_TABLE WHERE $COL_LEASE_INFORMATION LIKE '%'||?||'%' AND $COL_EMAIL_ID=? ", arrayOf(notice,email))
         val apartmentList: ArrayList<Apartment> = ArrayList()
 
         if (cursor.moveToFirst()) {
@@ -146,9 +146,9 @@ class ApartmentDatabase (context: Context?) : SQLiteOpenHelper(context, DATABASE
         contentValues.put(COL_APARTMENT_NO, apt_no)
         contentValues.put(COL_TENANT_NAME, tenant_name)
         contentValues.put(COL_PHONE_NUMBER, phone_no)
-        contentValues.put(COL_LEASE_PERIOD, lease_period)
+        contentValues.put(COL_LEASE_INFORMATION, lease_period)
         contentValues.put(COL_LEASE_AMOUNT, lease_amount)
-        contentValues.put(COL_BEDS, beds)
+        contentValues.put(COL_BEDS_BATH, beds)
         contentValues.put(COL_EMAIL_ID, email)
 
         Log.d("content", contentValues.toString())
@@ -213,8 +213,8 @@ class ApartmentDatabase (context: Context?) : SQLiteOpenHelper(context, DATABASE
         private const val COL_TENANT_NAME = "tenant_name"
         private const val COL_PHONE_NUMBER = "phone_no"
         private const val COL_LEASE_AMOUNT = "lease_amount"
-        private const val COL_LEASE_PERIOD = "lease_period"
-        private const val COL_BEDS = "beds_bath"
+        private const val COL_LEASE_INFORMATION = "lease_information"
+        private const val COL_BEDS_BATH = "beds_bath"
         private const val COL_USER_NAME = "user_name"
         private const val COL_PASSWORD = "password"
         private const val COL_EMAIL_ID = "email_id"
