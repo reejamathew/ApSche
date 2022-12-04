@@ -95,6 +95,9 @@ class SignUpFragment : Fragment() {
             } else if (email == "") {
                 errorMessage = "Please enter the email"
                 return false
+            } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                errorMessage = "Please enter valid email"
+                return false
             } else if (password == "") {
                 errorMessage = "Please enter the password"
                 return false
@@ -110,47 +113,4 @@ class SignUpFragment : Fragment() {
         }
     }
 
-//verifying whether valid email
-    private fun verifyEmailPattern(email: String, callback: (Boolean?) -> Unit) {
-        val url = "https://emailvalidation.abstractapi.com/v1/?" +
-                "api_key=c085091fd2434a3ea2bf6c0c19e97c14&" +
-                "email=" + email;
-        var isEmailValid = false
-
-        AsyncHttpClient().get(url, object : AsyncHttpResponseHandler() {
-            override fun onSuccess(
-                statusCode: Int,
-                headers: Array<Header?>?,
-                responseBody: ByteArray?
-            ) {
-                val response = String(responseBody!!)
-
-                val obj = JSONObject(response)
-                isEmailValid = obj.getJSONObject("is_valid_format").getBoolean("value")
-                callback.invoke(isEmailValid);
-                if (!isEmailValid) {
-//                    Toast.makeText(
-//                        this@SignUpFragment.requireActivity(),
-//                        "Please enter valid email id",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-                }
-            }
-
-            override fun onFailure(
-                statusCode: Int,
-                headers: Array<Header?>?,
-                responseBody: ByteArray?,
-                error: Throwable?
-            ) {
-                Log.d("response", error.toString())
-                callback.invoke(isEmailValid);
-//                Toast.makeText(
-//                    this.requireActivity(),
-//                    "Please enter valid email id",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-            }
-        })
-    }
 

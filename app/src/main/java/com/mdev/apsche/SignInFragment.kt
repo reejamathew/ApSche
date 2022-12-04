@@ -78,7 +78,10 @@ class SignInFragment : Fragment() {
         if (email == "") {
             errorMessage = "Please enter the email"
             return false
-        } else if (password == "") {
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            errorMessage = "Please enter valid email"
+            return false
+        }  else if (password == "") {
             errorMessage = "Please enter the password"
             return false
         }  else {

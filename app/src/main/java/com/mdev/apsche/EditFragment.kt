@@ -13,6 +13,13 @@ import com.mdev.apsche.database.ApartmentDatabase
 import com.mdev.apsche.model.Apartment
 
 class EditFragment : Fragment() {
+    private lateinit var aptNo: TextView
+    private lateinit var tenantName: TextView
+    private lateinit var phoneNo: TextView
+    private lateinit var leaseAmount: TextView
+    //private lateinit var currency:TextView
+    private lateinit var leasePeriod: TextView
+    private lateinit var beds: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,28 +41,70 @@ class EditFragment : Fragment() {
 
         //intializing fields
         val editButton = view.findViewById<Button>(R.id.editButton);
-        view.findViewById<TextView>(R.id.Aptno).text = apartment.aptNo.toString()
-        view.findViewById<TextView>(R.id.tenant_name).text = apartment.tenant_name.toString()
-        view.findViewById<TextView>(R.id.phone_no).text = apartment.phone_no.toString()
-        view.findViewById<TextView>(R.id.lease_period).text = apartment.lease_information
-        view.findViewById<TextView>(R.id.lease_amount).text = apartment.lease_amount.toString()
-        view.findViewById<TextView>(R.id.beds).text = apartment.beds_bath
+        aptNo = view.findViewById<TextView>(R.id.aptNoEditText)
+        tenantName = view.findViewById<TextView>(R.id.tenantNameEditText)
+        phoneNo = view.findViewById<TextView>(R.id.phoneNoEditText)
+        leaseAmount = view.findViewById<TextView>(R.id.leaseAmountEditText)
+        leasePeriod = view.findViewById<TextView>(R.id.leasePeriodEditText)
+        beds = view.findViewById<TextView>(R.id.bedsEditText)
+
+        view.findViewById<TextView>(R.id.aptNoEditText).text = apartment.aptNo.toString()
+        view.findViewById<TextView>(R.id.tenantNameEditText).text = apartment.tenant_name.toString()
+        view.findViewById<TextView>(R.id.phoneNoEditText).text = apartment.phone_no.toString()
+        view.findViewById<TextView>(R.id.leasePeriodEditText).text = apartment.lease_information
+        view.findViewById<TextView>(R.id.leaseAmountEditText).text = apartment.lease_amount.toString()
+        view.findViewById<TextView>(R.id.bedsEditText).text = apartment.beds_bath
 
         //button action
+        var isAllFieldsChecked = false
+
         editButton.setOnClickListener(View.OnClickListener {
             //updating values
-            databaseClass.updateApartment(
-                aptId,
-                view.findViewById<TextView>(R.id.Aptno).text.toString(),
-                view.findViewById<TextView>(R.id.tenant_name).text.toString(),
-                view.findViewById<TextView>(R.id.phone_no).text.toString(),
-                view.findViewById<TextView>(R.id.lease_period).text.toString(),
-                view.findViewById<TextView>(R.id.lease_amount).text.toString(),
-                view.findViewById<TextView>(R.id.beds).text.toString(),ApScheConstValues.useremail
+            isAllFieldsChecked = checkAllFields()
 
-            )
-            view.findNavController().popBackStack()
-            view.findNavController().popBackStack()
+            if (isAllFieldsChecked) {
+                databaseClass.updateApartment(
+                    aptId,
+                    view.findViewById<TextView>(R.id.aptNoEditText).text.toString(),
+                    view.findViewById<TextView>(R.id.tenantNameEditText).text.toString(),
+                    view.findViewById<TextView>(R.id.phoneNoEditText).text.toString(),
+                    view.findViewById<TextView>(R.id.leasePeriodEditText).text.toString(),
+                    view.findViewById<TextView>(R.id.leaseAmountEditText).text.toString(),
+                    view.findViewById<TextView>(R.id.bedsEditText).text.toString(),
+                    ApScheConstValues.useremail
+                )
+                view.findNavController().popBackStack()
+                view.findNavController().popBackStack()
+            }
         })
+    }
+
+    private fun checkAllFields(): Boolean {
+        if (aptNo.length() === 0) {
+            aptNo.error = "Apartment number is required"
+            return false
+        }
+        if (tenantName.length() === 0) {
+            tenantName.error = "Tenant Name is required"
+            return false
+        }
+        if (phoneNo.length() === 0) {
+            phoneNo.error = "Phone number is required"
+            return false
+        }
+        if (leaseAmount.length() === 0) {
+            leaseAmount.error = "Lease amount is required"
+            return false
+        }
+        if (leasePeriod.length() === 0) {
+            leasePeriod.error = "Lease information is required"
+            return false
+        }
+        if (beds.length() === 0) {
+            beds.error = "Beds and bath count is required"
+            return false
+        }
+        // after all validation return true.
+        return true
     }
 }

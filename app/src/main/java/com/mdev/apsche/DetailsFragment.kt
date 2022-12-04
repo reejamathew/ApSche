@@ -22,6 +22,8 @@ import org.json.JSONObject
 
 class DetailsFragment : Fragment() {
     lateinit var apartment:Apartment
+    private lateinit var currencyCode: TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +62,7 @@ class DetailsFragment : Fragment() {
         val editButton = view.findViewById<Button>(R.id.editButton);
         val deleteButton = view.findViewById<Button>(R.id.deleteButton);
         val currencyText = view.findViewById<TextView>(R.id.currencyEditText)
+        currencyCode = view.findViewById<TextView>(R.id.currencyEditText)
         val currencyButton = view.findViewById<Button>(R.id.currencyConvertButton);
 
         //setting listeners for the buttons
@@ -94,13 +97,18 @@ class DetailsFragment : Fragment() {
                 }
             }
         })
+        var isAllFieldsChecked = false
 
         currencyButton.setOnClickListener(View.OnClickListener {
-            getCurrencyResponse(currencyText.text.toString()) { isCurrencyValid ->
+            isAllFieldsChecked = checkAllFields()
+            if(isAllFieldsChecked) {
+                    getCurrencyResponse(currencyText.text.toString()) { isCurrencyValid ->
 
-            }
-            })
+                    }
+                }
+        })
         }
+
 
     // getting response from server for currency conversion
 
@@ -156,4 +164,11 @@ class DetailsFragment : Fragment() {
         })
     }
 
+    private fun checkAllFields(): Boolean {
+        if (currencyCode.length() === 0) {
+            currencyCode.error = "Currency code is required"
+            return false
+        }
+        return true
+    }
 }
